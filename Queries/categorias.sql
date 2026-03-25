@@ -4,9 +4,9 @@ CREATE TABLE categorias (
     id INT PRIMARY KEY AUTO_INCREMENT,
     usuario_id INT NOT NULL,
     nome VARCHAR(100) NOT NULL,
-   tipo ENUM('receita', 'despesa') NOT NULL,
+    tipo ENUM('receita', 'despesa') NOT NULL,
     created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
 -- Inserindo categorias - Cada usuário tem suas próprias categorias

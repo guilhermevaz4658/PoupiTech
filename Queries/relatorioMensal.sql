@@ -1,5 +1,4 @@
--- Relatório mensal
-
+-- Relatório mensal 
 SELECT 
     DATE_FORMAT(data, '%Y-%m') AS mes,
     c.tipo,

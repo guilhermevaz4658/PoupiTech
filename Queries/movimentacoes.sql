@@ -3,8 +3,8 @@
 CREATE TABLE movimentacoes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     usuario_id INT NOT NULL,
+    conta_id INT NOT NULL,
     categoria_id INT,
-    tipo VARCHAR(10) NOT NULL, -- 'receita' ou 'despesa'
     descricao VARCHAR(255),
     valor DECIMAL(10,2) NOT NULL,
     data DATE NOT NULL,
@@ -17,18 +17,20 @@ CREATE TABLE movimentacoes (
 -- Inserindo movimentações
 -- João (usuario_id = 1)
 INSERT INTO movimentacoes 
-(usuario_id, categoria_id, tipo, descricao, valor, data)
+(usuario_id, conta_id, categoria_id, descricao, valor, data)
 VALUES
-(1, 1, 'receita', 'Salário', 3000, '2026-03-01'),
-(1, 2, 'receita', 'Freelance site', 800.00, '2026-03-05'),
-(1, 3, 'despesa', 'Supermercado', 250.00, '2026-03-06'),
-(1, 4, 'despesa', 'Uber', 60.00, '2026-03-07'),
-(1, 5, 'despesa', 'Cinema', 45.00, '2026-03-10'),
-(1, 3, 'despesa', 'Restaurante', 120.00, '2026-03-12');
+(1, 1, 1, 'Salário', 3000, '2026-03-01'),
+(1, 1, 2, 'Freelance site', 800.00, '2026-03-05'),
+(1, 1, 3, 'Supermercado', 250.00, '2026-03-06'),
+(1, 1, 4, 'Uber', 60.00, '2026-03-07'),
+(1, 1, 5, 'Cinema', 45.00, '2026-03-10'),
+(1, 1, 3, 'Restaurante', 120.00, '2026-03-12');
 
 -- Maria (usuario_id = 2)
-INSERT INTO movimentacoes (usuario_id, categoria_id, tipo, descricao, valor, data) VALUES
-(2, 6, 'receita', 'Salário mensal', 4000.00, '2026-03-01'),
-(2, 7, 'receita', 'Dividendos', 500.00, '2026-03-08'),
-(2, 8, 'despesa', 'Compras mercado', 300.00, '2026-03-09'),
-(2, 9, 'despesa', 'Plano academia', 120.00, '2026-03-11');
+INSERT INTO movimentacoes 
+(usuario_id, conta_id, categoria_id, descricao, valor, data)
+VALUES
+(2, 2, 6, 'Salário mensal', 4000.00, '2026-03-01'),
+(2, 2, 7, 'Dividendos', 500.00, '2026-03-08'),
+(2, 2, 8, 'Compras mercado', 300.00, '2026-03-09'),
+(2, 2, 9, 'Plano academia', 120.00, '2026-03-11');
