@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>PoupiTech</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 🔝 HEADER BONITO -->
+  <header>
+    <div>
+      <h1>
+        <span class="verde">Poupi</span><span class="laranja">Tech</span>
+      </h1>
+      <p>Tecnologia que cuida do seu bolso</p>
+    </div>
+  </header>
+
+  <!-- 💰 FORMULÁRIO -->
+  <div class="container">
+
+    <input type="text" id="descricao" placeholder="Descrição da transação">
+
+    <input type="number" id="valor" placeholder="Valor">
+
+    <select id="tipo">
+      <option value="Despesa">Despesa</option>
+      <option value="Receita">Receita</option>
+    </select>
+
+    <select id="categoria">
+      <option value="1">Alimentação (Despesa)</option>
+      <option value="2">Salário (Receita)</option>
+    </select>
+
+    <button id="btnAdicionar">Adicionar</button>
+
+  </div>
+
+  <!-- 📋 LISTA -->
+  <h2 class="titulo-lista">📋 Transações</h2>
+  <ul id="lista"></ul>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
