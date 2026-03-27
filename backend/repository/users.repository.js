@@ -14,13 +14,24 @@ async function findByEmail(email) {
 }
 
 async function createUser(user) {
-    return db("usuarios").insert(user).returning("*")
+    const [id] = await db("usuarios").insert(user)
+    return db("usuarios").where({ id }).first()
 }
 
+async function deleteUser(id){
+    return db("usuarios").where({id}).del()
+}
+
+async function updateUser(id, validatedData) {
+    await db("usuarios").where({ id }).update(validatedData)
+    return db("usuarios").where({ id }).first()  
+}
 
 export {
     findAll,
     findByEmail,
     createUser,
-    findUserById
+    findUserById,
+    deleteUser,
+    updateUser
 }
