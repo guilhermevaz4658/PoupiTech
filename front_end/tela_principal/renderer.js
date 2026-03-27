@@ -1,6 +1,15 @@
 const lista = document.getElementById('lista');
 const btn = document.getElementById('btnAdicionar');
+const usuario = JSON.parse(localStorage.getItem("usuario"));
 
+if (!usuario) {
+  alert("Você precisa fazer login!");
+  window.location.href = "../tela_login/index.html";
+}
+
+// mostra nome na tela
+document.getElementById("boasVindas").innerText =
+  "Bem-vindo, " + usuario.nome + "!";
 
 btn.addEventListener('click', async () => {
 

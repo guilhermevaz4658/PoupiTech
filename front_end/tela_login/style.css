@@ -1,17 +1,31 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #2f5e2e, #1e3d1d);
+    background: linear-gradient(135deg, #165f14, hsl(118, 28%, 50%));
     color: white;
+    
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
     text-align: center;
 }
 
 /* TOPO */
 .topo {
     padding-top: 60px;
+    margin-bottom: 20px;
 }
 
 /* LOGO */
+
+.logo {
+    width: 200px;   /* ajuste como quiser */
+    margin-bottom: 10px;
+}
+
 h1 {
     font-size: 42px;
     margin: 10px 0 5px;
@@ -80,13 +94,24 @@ button:hover {
 .cadastro {
     display: block;
     margin-top: 15px;
-    background: transparent;
+    background: #00aa55;
     border: none;
-    color: #007bff;
+    color: white;
     text-decoration: none;
     font-size: 14px;
 }
 
 .cadastro:hover {
     text-decoration: underline;
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+    font-size: 14px;
 }

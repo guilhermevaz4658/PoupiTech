@@ -1,0 +1,85 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #165f14, #6bbf73);
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* CONTAINER */
+.container {
+    text-align: center;
+}
+
+/* TOPO */
+.topo {
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 42px;
+    margin-bottom: 5px;
+}
+
+.verde {
+    color: #00ff88;
+}
+
+.laranja {
+    color: #ff9900;
+}
+
+/* BOX */
+.box {
+    background: white;
+    color: black;
+    padding: 25px;
+    border-radius: 12px;
+    width: 300px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* INPUTS */
+input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+input:focus {
+    border-color: #00aa55;
+}
+
+/* BOTÕES */
+button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #00aa55;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #008f47;
+}
+
+/* BOTÃO VOLTAR */
+.voltar {
+    background: transparent;
+    color: #00aa55;
+}
+
+.voltar:hover {
+    text-decoration: underline;
+}

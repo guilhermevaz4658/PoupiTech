@@ -21,6 +21,5 @@ async function login() {
 }
 
 function irParaCadastro() {
-    // você pode criar essa tela depois
-    window.location.href = '../tela_cadastro/index.html';
+  window.location.href = "../pagina_cadastro/index.html";
 }
