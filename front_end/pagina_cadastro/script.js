@@ -1,59 +1,97 @@
+function toggleSenha() {
+    const input = document.getElementById("senha");
+    input.type = input.type === "password" ? "text" : "password";
+}
+
+function toggleSenhaConfirm() {
+    const input = document.getElementById("confirmarSenha");
+    input.type = input.type === "password" ? "text" : "password";
+}
+
+function limparErros() {
+    document.querySelectorAll("input").forEach(input => {
+        input.classList.remove("erro");
+    });
+}
+
 function cadastrar() {
-  const nome = document.getElementById("nome").value;
-  const email = document.getElementById("email").value;
-  const senha = document.getElementById("senha").value;
-  const confirmarSenha = document.getElementById("confirmarSenha").value;
-  const mensagem = document.getElementById("mensagem");
+    const nome = document.getElementById("nome");
+    const email = document.getElementById("email");
+    const senha = document.getElementById("senha");
+    const confirmarSenha = document.getElementById("confirmarSenha");
+    const mensagem = document.getElementById("mensagem");
+    const botao = document.getElementById("btnCadastrar");
 
-  // valida campos vazios
-  if (!nome || !email || !senha || !confirmarSenha) {
-    mensagem.innerText = "Preencha todos os campos!";
-    return;
-  }
+    limparErros();
+    mensagem.innerText = "";
 
-  // valida senha mínima
-  if (senha.length < 6) {
-    mensagem.innerText = "A senha deve ter pelo menos 6 caracteres!";
-    return;
-  }
+    // loading
+    botao.innerText = "Cadastrando...";
+    botao.disabled = true;
 
-  // valida confirmação de senha
-  if (senha !== confirmarSenha) {
-    mensagem.innerText = "As senhas não coincidem!";
-    return;
-  }
+    setTimeout(() => {
 
-  // verifica se já existe usuário
-  const usuarioExistente = JSON.parse(localStorage.getItem("usuario"));
+        if (!nome.value || !email.value || !senha.value || !confirmarSenha.value) {
+            mensagem.innerText = "Preencha todos os campos!";
+            [nome, email, senha, confirmarSenha].forEach(campo => {
+                if (!campo.value) campo.classList.add("erro");
+            });
+            resetBotao(botao);
+            return;
+        }
 
-  if (usuarioExistente && usuarioExistente.email === email) {
-    mensagem.innerText = "Este email já está cadastrado!";
-    return;
-  }
+        if (senha.value.length < 6) {
+            mensagem.innerText = "A senha deve ter pelo menos 6 caracteres!";
+            senha.classList.add("erro");
+            resetBotao(botao);
+            return;
+        }
 
-  // salva usuário
-  const usuario = {
-    nome,
-    email,
-    senha
-  };
+        if (senha.value !== confirmarSenha.value) {
+            mensagem.innerText = "As senhas não coincidem!";
+            senha.classList.add("erro");
+            confirmarSenha.classList.add("erro");
+            resetBotao(botao);
+            return;
+        }
 
-  localStorage.setItem("usuario", JSON.stringify(usuario));
+        const usuarioExistente = JSON.parse(localStorage.getItem("usuario"));
 
-  mensagem.innerText = "Cadastro realizado com sucesso!";
+        if (usuarioExistente && usuarioExistente.email === email.value) {
+            mensagem.innerText = "Este email já está cadastrado!";
+            email.classList.add("erro");
+            resetBotao(botao);
+            return;
+        }
 
-  // limpa campos
-  document.getElementById("nome").value = "";
-  document.getElementById("email").value = "";
-  document.getElementById("senha").value = "";
-  document.getElementById("confirmarSenha").value = "";
+        const usuario = {
+            nome: nome.value,
+            email: email.value,
+            senha: senha.value
+        };
 
-  // redireciona
-  setTimeout(() => {
-    window.location.href = "../tela_login/index.html";
-  }, 1200);
+        localStorage.setItem("usuario", JSON.stringify(usuario));
+
+        mensagem.style.color = "green";
+        mensagem.innerText = "Cadastro realizado com sucesso!";
+
+        nome.value = "";
+        email.value = "";
+        senha.value = "";
+        confirmarSenha.value = "";
+
+        setTimeout(() => {
+            window.location.href = "../tela_login/index.html";
+        }, 1200);
+
+    }, 1200);
+}
+
+function resetBotao(botao) {
+    botao.innerText = "Cadastrar";
+    botao.disabled = false;
 }
 
 function voltarLogin() {
-  window.location.href = "../tela_login/index.html";
+    window.location.href = "../tela_login/index.html";
 }
