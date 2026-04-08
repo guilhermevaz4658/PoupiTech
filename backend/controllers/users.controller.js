@@ -1,38 +1,50 @@
 import * as service from "../services/users.service.js"
+import { ZodError } from "zod"
 
 async function getUsers(req, res) {
-    try{
+    try {
         const getUsers = await service.getUserAll()
-        res.json(getUsers)   
+        res.status(200).json(getUsers)
     } catch (error) {
-        res.status(500).json({message: "Erro ao consultar usuários"})
+        res.status(500).json({ message: "Erro ao consultar usuários" })
     }
-} 
+}
 
 async function getUsersById(req, res) {
-    try{
+    try {
         const userId = await service.getUserById(req.params.id)
-        res.json(userId)   
+        res.status(200).json(userId)
     } catch (error) {
-        res.status(404).json({message: error.message})
+        res.status(404).json({ message: error.message })
     }
-} 
+}
 
 async function createUser(req, res) {
-    try{
+    try {
         const createUser = await service.createUser(req.body)
-        res.json(createUser)
+        res.status(201).json(createUser)
     } catch (error) {
-        res.status(500).json({message: error.message})
+        console.log(error)
+
+        if (error instanceof ZodError) {
+            const messages = error.issues.map(e => ({
+                field: e.path[0],
+                message: e.message
+            }))
+
+            return res.status(400).json({ errors: messages })
+        }
+
+        return res.status(500).json({ message: error.message })
     }
 }
 
 async function deleteUser(req, res) {
-    try{
+    try {
         const deleteUser = await service.deleteUser(req.params.id)
-        res.json(deleteUser)
+        res.status(200).json(deleteUser)
     } catch (error) {
-        res.status(404).json({message: error.message})
+        res.status(404).json({ message: error.message })
     }
 }
 
@@ -41,11 +53,17 @@ async function updateUser(req, res) {
     try {
         const { id } = req.params
         const data = req.body
-        
+
         const updateUser = await service.updateUser(id, data)
-        res.json(updateUser)
+        res.status(200).json(updateUser)
     } catch (error) {
-        res.status(500).json({message: error.message})
+        // verifica se é um erro do Zod
+        if (error instanceof ZodError) {
+            const messages = error.errors.map(e => ({ field: e.path[0], message: e.message }))
+            return res.status(400).json({ errors: messages })
+        }
+        // caso seja outro tipo de erro
+        res.status(500).json({ message: error.message })
     }
 }
 

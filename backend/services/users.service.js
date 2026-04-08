@@ -1,9 +1,10 @@
 import { createUserDTO, updateUserDTO } from '../dto/users.dto.js'
 import * as repository from '../repository/users.repository.js'
-import * as z from 'zod'
+import bcrypt from 'bcrypt'
+import { z } from "zod"
 
 async function getUserAll() {
-    users = await repository.findAll()
+    const users = await repository.findAll()
     return users.map(({ senha, ...userWithoutPassword }) => userWithoutPassword)
 }
 
@@ -24,6 +25,10 @@ async function createUser(data) {
         throw new Error("Email já cadastrado")
     }
     
+    // adicionando segurança com hash na senha
+    const hashedPassword = await bcrypt.hash(validatedData.senha, 10)
+    validatedData.senha = hashedPassword
+
     const createdUser = await repository.createUser(validatedData)
     const {senha, ...retornarUser} = createdUser
     return {message: "Usuário criado com sucesso", usuario: retornarUser}
@@ -52,7 +57,7 @@ async function updateUser(id, data){
     const validatedData = updateUserDTO.parse(data)
     const updatedUser = await repository.updateUser(id, validatedData)
     const { senha, ...retornarUser } = updatedUser
-    return retornarUser
+    return {message: "Usuário editado com sucesso", usuario: retornarUser}
 }
 
 

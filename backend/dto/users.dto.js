@@ -2,8 +2,8 @@ import { z } from "zod"
 
 export const createUserDTO = z.object({
     nome: z.string().min(1, "Nome é obrigatório"),
-    email: z.string().email("Email inválido"),
-    senha: z.string().min(5, "Senha deve ter no mínimo 5 caracteres")
+    email: z.string().email("Email inválido, precisa conter '@'' e '.'"),
+    senha: z.string().min(6, "Senha deve ter no mínimo 5 caracteres")
 })
 
 //usando biblioteca Z para validação de campos

@@ -1,4 +1,4 @@
-// importar db
+import { db } from "../database/knex.js"
 
 async function findAll() {
     return db("usuarios").select('*')
