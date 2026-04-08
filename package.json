@@ -1,32 +1,12 @@
 {
-  "name": "poupitech",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "name": "poupitech-root",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon backend/server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/guilhermevaz4658/PoupiTech.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
-  "bugs": {
-    "url": "https://github.com/guilhermevaz4658/PoupiTech/issues"
-  },
-  "homepage": "https://github.com/guilhermevaz4658/PoupiTech#readme",
-  "dependencies": {
-    "bcrypt": "^6.0.0",
-    "express": "^5.2.1",
-    "knex": "^3.2.6",
-    "mysql2": "^3.20.0",
-    "zod": "^4.3.6"
+    "dev": "concurrently \"npm run backend\" \"npm run electron\"",
+    "backend": "cd backend && npm run dev",
+    "electron": "cd electron && npm start"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "concurrently": "^9.2.1"
   }
 }

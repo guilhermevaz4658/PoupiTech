@@ -18,6 +18,8 @@ async function getUserById(id) {
     return userWithoutPassword
 }
 
+
+// ADICIONAR JWT
 async function createUser(data) {
     const validatedData = createUserDTO.parse(data)
     const existingEmail = await repository.findByEmail(validatedData.email)
