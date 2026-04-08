@@ -1,0 +1,12 @@
+{
+  "name": "poupitech-root",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run electron\"",
+    "backend": "cd backend && npm run dev",
+    "electron": "cd electron && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
