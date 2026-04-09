@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>PoupiTech</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- MENU LATERAL -->
+<div class="sidebar" id="sidebar">
+
+  <button id="toggleSidebar">☰</button>
+
+  <h2> Menu</h2>
+
+<button onclick="mostrarTela('dashboard')">
+  <span class="icone">🏠</span>
+  <span class="texto">Dashboard</span>
+</button>
+
+<button onclick="mostrarTela('transacoes')">
+  <span class="icone">💸</span>
+  <span class="texto">Transações</span>
+</button>
+
+<button onclick="mostrarTela('relatorio')">
+  <span class="icone">📈</span>
+  <span class="texto">Relatórios</span>
+</button>
+
+<button onclick="mostrarTela('categorias')">
+  <span class="icone">🏷</span>
+  <span class="texto">Categorias</span>
+</button>
+
+</div>
+
+  <div class="saldo-fixo">R$ <span id="saldoValor">0.00</span>
+</div>
+  <!-- HEADER -->
+  <header>
+    <div>
+      <h1>
+        <span class="verde">Poupi</span><span class="laranja">Tech</span>
+      </h1>
+      <p>Tecnologia que cuida do seu bolso</p>
+
+   
+      <h2 id="boasVindas"></h2>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <div class="conteudo">
+
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="tela">
+      <h2>Visão Geral</h2>
+      <canvas id="grafico"></canvas>
+      <canvas id="graficoCategoria"></canvas>
+    </div>
+
+    <!-- TRANSAÇÕES -->
+    <div id="transacoes" class="tela">
+      <h2>Transações</h2>
+
+      <input type="text" id="descricao" placeholder="Descrição">
+      <input type="number" id="valor" placeholder="Valor">
+
+      <select id="tipo">
+        <option value="Despesa">Despesa</option>
+        <option value="Receita">Receita</option>
+      </select>
+
+      <select id="categoria">
+        <option value="Alimentação">Alimentação</option>
+        <option value="Transporte">Transporte</option>
+        <option value="Lazer">Lazer</option>
+        <option value="Salario">Salario</option>
+      </select>
+
+      <button id="btnAdicionar">Adicionar</button>
+
+      <ul id="lista"></ul>
+    </div>
+
+    <!-- RELATÓRIO -->
+    <div id="relatorio" class="tela">
+      <h2>Relatórios</h2>
+      <button onclick="relatorioSemanal()">Semanal</button>
+      <button onclick="relatorioMensal()">Mensal</button>
+      <canvas id="graficoRelatorio"></canvas>
+    </div>
+
+    <!-- CATEGORIAS -->
+    <div id="categorias" class="tela">
+      <h2>Categorias</h2>
+      <ul id="listaCategorias"></ul>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../principal/rendererTPrincipal.js"></script>
+
+</body>
+</html>
