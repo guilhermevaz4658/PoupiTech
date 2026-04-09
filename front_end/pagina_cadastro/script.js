@@ -1,87 +1,27 @@
-function toggleSenha() {
-    const input = document.getElementById("senha");
-    input.type = input.type === "password" ? "text" : "password";
-}
-
-function toggleSenhaConfirm() {
-    const input = document.getElementById("confirmarSenha");
-    input.type = input.type === "password" ? "text" : "password";
-}
-
 function limparErros() {
     document.querySelectorAll("input").forEach(input => {
         input.classList.remove("erro");
     });
-}
 
-
-function cadastrar(event) {
-    event.preventDefault(); 
-
-const nome = document.getElementById("nome");
-const email = document.getElementById("email");
-const senha = document.getElementById("senha");
-const confirmarSenha = document.getElementById("confirmarSenha");
-const mensagem = document.getElementById("mensagem");
-const botao = document.getElementById("btnCadastrar");
-
-const erroEmail = document.getElementById("erroEmail");
-const erroSenha = document.getElementById("erroSenha");
-
-// ===== VALIDAÇÃO EM TEMPO REAL =====
-
-
-// EMAIL
-email.addEventListener("input", () => {
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!regexEmail.test(email.value)) {
-        email.classList.add("erro");
-        erroEmail.innerText = "Insira um e-mail válido (ex: nome@email.com)";
-    } else {
-        email.classList.remove("erro");
-        erroEmail.innerText = "";
-    }
-});
-
-// SENHAS
-function validarSenhas() {
-    if (confirmarSenha.value === "") {
-        confirmarSenha.classList.remove("erro");
-        erroSenha.innerText = "";
-        return;
-    }
-
-    if (senha.value !== confirmarSenha.value) {
-        senha.classList.add("erro");
-        confirmarSenha.classList.add("erro");
-        erroSenha.innerText = "As senhas não coincidem";
-    } else {
-        senha.classList.remove("erro");
-        confirmarSenha.classList.remove("erro");
-        erroSenha.innerText = "";
-    }
-}
-
-senha.addEventListener("input", validarSenhas);
-confirmarSenha.addEventListener("input", validarSenhas);
-
-// ===== FUNÇÕES =====
-
-function limparErros() {
-    document.querySelectorAll("input").forEach(input => {
-        input.classList.remove("erro");
-    });
-    erroEmail.innerText = "";
-    erroSenha.innerText = "";
+    document.getElementById("erroEmail").innerText = "";
+    document.getElementById("erroSenha").innerText = "";
 }
 
 function cadastrar(event) {
     event.preventDefault();
 
+    const nome = document.getElementById("nome");
+    const email = document.getElementById("email");
+    const senha = document.getElementById("senha");
+    const confirmarSenha = document.getElementById("confirmarSenha");
+    const mensagem = document.getElementById("mensagem");
+    const botao = document.getElementById("btnCadastrar");
+
+    const erroEmail = document.getElementById("erroEmail");
+    const erroSenha = document.getElementById("erroSenha");
+
     limparErros();
     mensagem.innerText = "";
-    mensagem.style.color = "red";
 
     botao.innerText = "Cadastrando...";
     botao.disabled = true;
@@ -90,9 +30,12 @@ function cadastrar(event) {
 
         if (!nome.value || !email.value || !senha.value || !confirmarSenha.value) {
             mensagem.innerText = "Preencha todos os campos!";
+            mensagem.style.color = "red";
+
             [nome, email, senha, confirmarSenha].forEach(campo => {
                 if (!campo.value) campo.classList.add("erro");
             });
+
             resetBotao();
             return;
         }
@@ -100,34 +43,37 @@ function cadastrar(event) {
         // VALIDAR EMAIL
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!regex.test(email.value)) {
+            erroEmail.innerText = "Email inválido!";
             email.classList.add("erro");
-            erroEmail.innerText = "Insira um e-mail válido (ex: nome@email.com)";
             resetBotao();
             return;
         }
 
         // VALIDAR SENHA
         if (senha.value.length < 6) {
-            mensagem.innerText = "A senha deve ter pelo menos 6 caracteres!";
+            mensagem.innerText = "Senha deve ter pelo menos 6 caracteres!";
+            mensagem.style.color = "red";
             senha.classList.add("erro");
             resetBotao();
             return;
         }
 
         if (senha.value !== confirmarSenha.value) {
-            erroSenha.innerText = "As senhas não coincidem";
+            erroSenha.innerText = "Senhas não coincidem!";
             senha.classList.add("erro");
             confirmarSenha.classList.add("erro");
             resetBotao();
             return;
         }
-        
+
+        // SALVAR USUÁRIO
         const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
-        const emailJaExiste = usuarios.some(user => user.email === email.value);
+        const existe = usuarios.some(user => user.email === email.value);
 
-        if (emailJaExiste) {
-            mensagem.innerText = "Este email já está cadastrado!";
+        if (existe) {
+            mensagem.innerText = "Email já cadastrado!";
+            mensagem.style.color = "red";
             email.classList.add("erro");
             resetBotao();
             return;
@@ -141,8 +87,8 @@ function cadastrar(event) {
 
         localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
-        mensagem.style.color = "green";
         mensagem.innerText = "Cadastro realizado com sucesso!";
+        mensagem.style.color = "green";
 
         nome.value = "";
         email.value = "";
@@ -157,10 +103,11 @@ function cadastrar(event) {
 }
 
 function resetBotao() {
+    const botao = document.getElementById("btnCadastrar");
     botao.innerText = "Cadastrar";
     botao.disabled = false;
 }
 
 function voltarLogin() {
-    window.location.href = '../tela_login/index.html';
+    window.location.href = "../tela_login/index.html";
 }
