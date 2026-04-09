@@ -7,55 +7,35 @@
 </head>
 <body>
 
-
-  <header>
-    <div>
-      <h1>
-        <span class="verde">Poupi</span><span class="laranja">Tech</span>
-      </h1>
-      <p>Tecnologia que cuida do seu bolso</p>
-      <h2 id="boasVindas"></h2>
-
-    </div>
-  </header>
-
-
-  <div class="container">
-
-    <input type="text" id="descricao" placeholder="Descrição da transação">
-
-    <input type="number" id="valor" placeholder="Valor">
-
-    <select id="tipo">
-      <option value="Despesa">Despesa</option>
-      <option value="Receita">Receita</option>
-    </select>
-
-    <select id="categoria">
-      <option value="1">Alimentação (Despesa)</option>
-      <option value="2">Salário (Receita)</option>
-    </select>
-
-    <button id="btnAdicionar">Adicionar</button>
-
+<header>
+  <div>
+    <h1>
+      <span class="verde">Poupi</span><span class="laranja">Tech</span>
+    </h1>
+    <p>Tecnologia que cuida do seu bolso</p>
+    <h2 id="boasVindas"></h2>
   </div>
+</header>
+
+<div class="container">
+  <input type="text" id="descricao" placeholder="Descrição da transação">
+  <input type="number" id="valor" placeholder="Valor">
+  <select id="tipo">
+    <option value="Despesa">Despesa</option>
+    <option value="Receita">Receita</option>
+  </select>
+  <select id="categoria">
+    <option value="1">Alimentação (Despesa)</option>
+    <option value="2">Salário (Receita)</option>
+  </select>
+  <button id="btnAdicionar">Adicionar</button>
+</div>
+
 <div class="lista-container">
   <h2 class="titulo-lista">📋 Transações</h2>
   <ul id="lista"></ul>
 </div>
-  <script src="renderer.js"></script>
+
 <script src="renderer.js"></script>
-
-<script>
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
-
-  if (!usuario) {
-    window.location.href = "../tela_login/index.html";
-  } else {
-    document.getElementById("boasVindas").innerText =
-      "Bem-vindo, " + usuario.nome + "!";
-  }
-</script>
-
 </body>
 </html>

@@ -7,7 +7,7 @@ function limparErros() {
     document.getElementById("erroSenha").innerText = "";
 }
 
-function cadastrar(event) {
+async function cadastrar(event) {
     event.preventDefault();
 
     const nome = document.getElementById("nome");
@@ -26,66 +26,81 @@ function cadastrar(event) {
     botao.innerText = "Cadastrando...";
     botao.disabled = true;
 
-    setTimeout(() => {
+    // VALIDAR CAMPOS
+    if (!nome.value || !email.value || !senha.value || !confirmarSenha.value) {
+        mensagem.innerText = "Preencha todos os campos!";
+        mensagem.style.color = "red";
 
-        if (!nome.value || !email.value || !senha.value || !confirmarSenha.value) {
-            mensagem.innerText = "Preencha todos os campos!";
-            mensagem.style.color = "red";
-
-            [nome, email, senha, confirmarSenha].forEach(campo => {
-                if (!campo.value) campo.classList.add("erro");
-            });
-
-            resetBotao();
-            return;
-        }
-
-        // VALIDAR EMAIL
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!regex.test(email.value)) {
-            erroEmail.innerText = "Email inválido!";
-            email.classList.add("erro");
-            resetBotao();
-            return;
-        }
-
-        // VALIDAR SENHA
-        if (senha.value.length < 6) {
-            mensagem.innerText = "Senha deve ter pelo menos 6 caracteres!";
-            mensagem.style.color = "red";
-            senha.classList.add("erro");
-            resetBotao();
-            return;
-        }
-
-        if (senha.value !== confirmarSenha.value) {
-            erroSenha.innerText = "Senhas não coincidem!";
-            senha.classList.add("erro");
-            confirmarSenha.classList.add("erro");
-            resetBotao();
-            return;
-        }
-
-        // SALVAR USUÁRIO
-        const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-
-        const existe = usuarios.some(user => user.email === email.value);
-
-        if (existe) {
-            mensagem.innerText = "Email já cadastrado!";
-            mensagem.style.color = "red";
-            email.classList.add("erro");
-            resetBotao();
-            return;
-        }
-
-        usuarios.push({
-            nome: nome.value,
-            email: email.value,
-            senha: senha.value
+        [nome, email, senha, confirmarSenha].forEach(campo => {
+            if (!campo.value) campo.classList.add("erro");
         });
 
-        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+        resetBotao();
+        return;
+    }
+
+    // VALIDAR EMAIL
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email.value)) {
+        erroEmail.innerText = "Email inválido!";
+        email.classList.add("erro");
+        resetBotao();
+        return;
+    }
+
+    // VALIDAR SENHA
+    if (senha.value.length < 6) {
+        mensagem.innerText = "Senha deve ter pelo menos 6 caracteres!";
+        mensagem.style.color = "red";
+        senha.classList.add("erro");
+        resetBotao();
+        return;
+    }
+
+    if (senha.value !== confirmarSenha.value) {
+        erroSenha.innerText = "Senhas não coincidem!";
+        senha.classList.add("erro");
+        confirmarSenha.classList.add("erro");
+        resetBotao();
+        return;
+    }
+
+    // CHAMADA PARA API
+    try {
+        const response = await fetch("http://localhost:3000/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nome: nome.value,
+                email: email.value,
+                senha: senha.value
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            if (data.errors) {
+                data.errors.forEach(err => {
+                    if (err.field === "email") {
+                        erroEmail.innerText = err.message;
+                        email.classList.add("erro");
+                    }
+                    if (err.field === "senha") {
+                        erroSenha.innerText = err.message;
+                        senha.classList.add("erro");
+                    }
+                });
+            } else {
+                mensagem.innerText = data.message;
+                mensagem.style.color = "red";
+            }
+
+            resetBotao();
+            return;
+        }
 
         mensagem.innerText = "Cadastro realizado com sucesso!";
         mensagem.style.color = "green";
@@ -99,7 +114,12 @@ function cadastrar(event) {
             window.location.href = "../tela_login/index.html";
         }, 1200);
 
-    }, 800);
+    } catch (error) {
+        console.error(error);
+        mensagem.innerText = "Erro ao conectar com o servidor!";
+        mensagem.style.color = "red";
+        resetBotao();
+    }
 }
 
 function resetBotao() {

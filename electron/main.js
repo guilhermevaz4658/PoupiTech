@@ -1,13 +1,26 @@
-const { app, BrowserWindow } = require("electron")
-const path = require("path")
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
+
+let win; 
 
 function createWindow() {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600
-  })
+  win = new BrowserWindow({ 
+    width: 900,
+    height: 800,
+    icon: path.join(__dirname, 'img/logo.png'),
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false
+    }
+  });
 
-  win.loadFile(path.join(__dirname, "index.html"))
+  win.loadFile(path.join(__dirname, '../front_end/pagina_cadastro/index.html'));
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(createWindow);
+
+
+ipcMain.on('mudar-tela', (event, tela) => {
+  win.loadFile(path.join(__dirname, `src/${tela}/index.html`));
+});
