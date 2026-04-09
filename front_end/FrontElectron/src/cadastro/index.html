@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastro - PoupiTech</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <div class="topo">
+      <img src="img/logo.png" alt="Logo PoupiTech" class="logo" />
+      <h1><span class="verde">Poupi</span><span class="laranja">Tech</span></h1>
+      <p>Cadastre-se para começar a cuidar do seu bolso</p>
+    </div>
+
+    <div class="cadastro-box">
+      <input type="text" id="nome" placeholder="Digite seu nome" />
+
+      <input type="email" id="email" placeholder="Digite seu email" />
+
+      <input type="password" id="senha" placeholder="Digite sua senha" />
+      
+      <input type="password" id="confirmaSenha" placeholder="Confirme sua senha" />
+      <button onclick="cadastrar()">Cadastrar</button>
+      <p id="mensagem"></p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2026 PoupiTech — Todos os direitos reservados</p>
+  </footer>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
