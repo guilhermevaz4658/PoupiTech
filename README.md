@@ -1,2 +1,1 @@
-# Documentação do Projeto
-# Branch para testar a aplicação antes de enviar para main
+# Branch para o público realizar testes de funcionalidades e achar bugs/feedbacks
